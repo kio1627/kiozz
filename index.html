@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>青梧机场</title><style>
+body { font-family: Arial; background:linear-gradient(135deg,#0f172a,#020617); color:#fff; text-align:center; }
+.page { display:none; }
+.active { display:block; }
+.container { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; padding:20px; }
+.card { background:#1e293b; padding:20px; border-radius:16px; width:260px; box-shadow:0 10px 25px rgba(0,0,0,0.4); transition:0.3s; }
+.card:hover { transform:translateY(-5px); }
+.price { font-size:28px; color:#38bdf8; margin:10px 0; }
+button { margin:5px 0; background:#38bdf8; border:none; padding:10px; width:100%; border-radius:10px; cursor:pointer; font-weight:bold; }
+button:hover { background:#0ea5e9; }
+.tag { background:#22c55e; padding:3px 8px; border-radius:6px; font-size:12px; margin-left:5px; }
+h2 { margin-top:30px; }
+</style></head>
+<body><div id="home" class="page active"><h1>✈️ 青梧机场</h1>
+<p>高速稳定｜流媒体解锁｜全平台支持</p><div class="container">  <div class="card">
+    <h3>初级套餐</h3>
+    <div class="price">￥58</div>
+    <p>200GB / 月</p>
+    <button onclick="goPay('初级套餐',58)">购买套餐</button>
+  </div>  <div class="card">
+    <h3>中级套餐 <span class="tag">推荐</span></h3>
+    <div class="price">￥128</div>
+    <p>1000GB / 月</p>
+    <button onclick="goPay('中级套餐',128)">购买套餐</button>
+  </div>  <div class="card">
+    <h3>高级套餐</h3>
+    <div class="price">￥168</div>
+    <p>3000GB / 月</p>
+    <button onclick="goPay('高级套餐',168)">购买套餐</button>
+  </div>  <div class="card">
+    <h3>无限套餐</h3>
+    <div class="price">￥228</div>
+    <p>不限流量</p>
+    <button onclick="goPay('无限套餐',228)">购买套餐</button>
+  </div></div><h2>🎬 流媒体专线</h2><div class="container">  <div class="card">
+    <h3>流媒体套餐</h3>
+    <div class="price">￥98</div>
+    <p>Netflix / Disney+</p>
+    <button onclick="goPay('流媒体套餐',98)">购买套餐</button>
+  </div>  <div class="card">
+    <h3>流媒体 Pro <span class="tag">推荐</span></h3>
+    <div class="price">￥158</div>
+    <p>全平台解锁</p>
+    <button onclick="goPay('流媒体Pro',158)">购买套餐</button>
+  </div>  <div class="card">
+    <h3>流媒体无限</h3>
+    <div class="price">￥268</div>
+    <p>4K支持</p>
+    <button onclick="goPay('流媒体无限',268)">购买套餐</button>
+  </div></div></div><div id="pay" class="page"><h2 id="plan"></h2>
+<p id="price"></p><div class="container" style="max-width:300px;margin:auto;">
+  <button onclick="pay('alipay')">💰 支付宝</button>
+  <button onclick="pay('usdt')">💎 USDT</button>
+  <button onclick="pay('tg')">✈️ 联系客服</button>
+  <button onclick="back()">返回</button>
+</div></div><script>
+let currentPrice = 0;
+
+function goPay(plan, price){
+  currentPrice = price;
+  document.getElementById('plan').innerText = plan;
+  document.getElementById('price').innerText = price + " 元";
+  document.getElementById('home').classList.remove('active');
+  document.getElementById('pay').classList.add('active');
+}
+
+function back(){
+  document.getElementById('pay').classList.remove('active');
+  document.getElementById('home').classList.add('active');
+}
+
+function pay(type){
+
+  if(type==='alipay'){
+    if(currentPrice==58) window.open('https://qr.alipay.com/2m619001tteu1b4dhdjrc0e');
+    if(currentPrice==128) window.open('https://qr.alipay.com/2m6102223jmfottxwf0ot34');
+    if(currentPrice==168) window.open('https://qr.alipay.com/2m615402xridqxga5r5qb2a');
+    if(currentPrice==228) window.open('https://qr.alipay.com/2m619848woryab8aaosovf3');
+    if(currentPrice==98) window.open('https://qr.alipay.com/2m6149847yfxmgj3qsbam12');
+    if(currentPrice==158) window.open('https://qr.alipay.com/2m615588l7rubxd06fvbh80');
+    if(currentPrice==268) window.open('https://qr.alipay.com/2m618509tqkbtu2j2ycpae8');
+  }
+
+  if(type==='usdt'){
+    alert("USDT-TRC20地址：TB6qQqtvmvBUb3GZot4Nt9x4gdiPbuAUXi");
+  }
+
+  if(type==='tg'){
+    window.open('https://t.me/kio_037');
+  }
+}
+</script><div style="position:fixed;top:10px;right:10px;font-size:14px;text-align:right;">
+  <div>💬 QQ: 2245190585</div>
+  <div onclick="window.open('https://t.me/kio_037')" style="cursor:pointer;">
+    ✈️ Telegram: @kio_037
+  </div>
+</div></body>
+</html>
