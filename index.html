@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>套餐介绍 - 青梧机场</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        h1 {
+            margin: 0;
+        }
+        .packages {
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+            gap: 20px;
+        }
+        .package {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .package:hover {
+            transform: scale(1.05);
+        }
+        .price {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .details {
+            margin: 15px 0;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        .payment-options {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .payment-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .payment-button:hover {
+            background-color: #0056b3;
+        }
+        .usdt-address-container {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .usdt-address {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            flex: 1;
+        }
+        .copy-button {
+            background-color: #ffc107;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #e0a800;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>青梧机场套餐介绍</h1>
+    </header>
+
+    <div class="container">
+        <div id="package-section">
+            <div class="packages">
+                <!-- 基础套餐 -->
+                <div class="package">
+                    <h2>基础套餐</h2>
+                    <p class="price">￥58/年</p>
+                    <div class="details">
+                        <ul>
+                            <li>每月200GB流量</li>
+                            <li>支持Netflix解锁</li>
+                            <li>提供常见协议</li>
+                        </ul>
+                    </div>
+                    <button onclick="showPaymentPage('basic')" class="button">立即购买</button>
+                </div>
+
+                <!-- 高级套餐 -->
+                <div class="package">
+                    <h2>高级套餐</h2>
+                    <p class="price">￥128/年</p>
+                    <div class="details">
+                        <ul>
+                            <li>每月1000GB流量</li>
+                            <li>支持Netflix、Disney+解锁</li>
+                            <li>提供常见协议和加密</li>
+                        </ul>
+                    </div>
+                    <button onclick="showPaymentPage('advanced')" class="button">立即购买</button>
+                </div>
+
+                <!-- 无限套餐 -->
+                <div class="package">
+                    <h2>无限套餐</h2>
+                    <p class="price">￥228/年</p>
+                    <div class="details">
+                        <ul>
+                            <li>无限流量</li>
+                            <li>解锁所有流媒体平台</li>
+                            <li>最佳加密协议和高速连接</li>
+                        </ul>
+                    </div>
+                    <button onclick="showPaymentPage('unlimited')" class="button">立即购买</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 支付页面（动态显示） -->
+        <div id="payment-section" style="display: none;">
+            <div class="payment-options">
+                <h2>您正在购买：<span id="package-name">套餐名称</span></h2>
+                <!-- 支付宝按钮 -->
+                <a href="https://qr.alipay.com/2m619001tteu1b4dhdjrc0e" class="payment-button">支付宝支付</a>
+
+                <!-- USDT支付 -->
+                <div class="usdt-address-container">
+                    <span class="usdt-address" id="usdt-address">TDeog9hGbpAXjBGdqVwE1pE1xCJj4W1Feq2</span>
+                    <button class="copy-button" onclick="copyAddress()">复制地址</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 青梧机场 - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function showPaymentPage(packageType) {
+            // 隐藏套餐展示部分，显示支付部分
+            document.getElementById('package-section').style.display = 'none';
+            document.getElementById('payment-section').style.display = 'block';
+            
+            // 根据选择的套餐更新页面内容
+            const packageName = packageType === 'basic' ? '基础套餐' : packageType === 'advanced' ? '高级套餐' : '无限套餐';
+            document.getElementById('package-name').textContent = packageName;
+            
+            // 设置USDT支付地址
+            const usdtAddress = packageType === 'basic' ? 'TDeog9hGbpAXjBGdqVwE1pE1xCJj4W1Feq2' :
+                                packageType === 'advanced' ? 'TDeog9hGbpAXjBGdqVwE1pE1xCJj4W1Feq3' : 'TDeog9hGbpAXjBGdqVwE1pE1xCJj4W1Feq4';
+            document.getElementById('usdt-address').textContent = usdtAddress;
+        }
+
+        function copyAddress() {
+            const address = document.getElementById('usdt-address').textContent;
+            const textArea = document.createElement('textarea');
+            textArea.value = address;
+            document.body.appendChild(textArea);
+
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            alert('地址已复制: ' + address);
+        }
+    </script>
+</body>
+</html>
