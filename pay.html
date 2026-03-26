@@ -1,58 +1,93 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>支付页面</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{background:#121212;color:#fff}
-.container{max-width:600px;margin:0 auto;padding:40px 20px}
-h1{text-align:center;margin-bottom:30px}
-.price-info{text-align:center;font-size:20px;margin-bottom:30px;color:#ff3b30}
-.pay-group{display:flex;flex-direction:column;gap:15px}
-.pay-btn{padding:18px;border:none;border-radius:14px;font-size:16px;font-weight:500;cursor:pointer}
-.pay-btn.alipay{background:#1677ff;color:#fff}
-.pay-btn.wechat{background:#07c160;color:#fff}
-.pay-btn.usdt{background:#26a69a;color:#fff}
-.back-btn{margin-top:30px;width:100%;padding:16px;background:#333;color:#fff;border:none;border-radius:14px;cursor:pointer}
-.usdt-info{background:#1e1e1e;padding:15px;border-radius:12px;margin-top:10px;word-break:break-all;font-size:14px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付页面</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+        body{background:#121212;color:#fff}
+        .container{max-width:600px;margin:0 auto;padding:40px 20px}
+        h1{text-align:center;margin-bottom:30px}
+        .price-info{text-align:center;font-size:20px;margin-bottom:30px;color:#ff3b30}
+        .pay-group{display:flex;flex-direction:column;gap:15px}
+        .pay-btn{padding:18px;border:none;border-radius:14px;font-size:16px;font-weight:500;cursor:pointer}
+        .pay-btn.alipay{background:#1677ff;color:#fff}
+        .pay-btn.wechat{background:#07c160;color:#fff}
+        .pay-btn.usdt{background:#26a69a;color:#fff}
+        .back-btn{margin-top:30px;width:100%;padding:16px;background:#333;color:#fff;border:none;border-radius:14px;cursor:pointer}
+        .usdt-info{background:#1e1e1e;padding:15px;border-radius:12px;margin-top:10px;word-break:break-all;font-size:14px}
+        .email-group{margin-bottom:20px}
+        .email-label{display:block;margin-bottom:8px;font-size:14px;color:#ccc}
+        .email-input{
+            width:100%;padding:14px 16px;background:#1e1e1e;border:1px solid #333;
+            border-radius:10px;color:#fff;font-size:16px;outline:none
+        }
+        .email-input:focus{border-color:#1677ff;background:#2a2a2a}
+        .contact-info{
+            margin-top:40px;text-align:center;font-size:14px;color:#999;line-height:1.8
+        }
+        .contact-info a{
+            color:#1677ff;text-decoration:none
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-  <h1>确认支付</h1>
-  <div class="price-info">金额：¥<span id="price"></span></div>
-  <div class="pay-group">
-    <button class="pay-btn alipay" id="alipayBtn">支付宝支付</button>
-    <button class="pay-btn wechat">微信支付</button>
-    <button class="pay-btn usdt" onclick="document.getElementById('usdtAddr').style.display='block'">USDT-TRC20 支付</button>
-  </div>
-  <div id="usdtAddr" class="usdt-info" style="display:none">
-    <p>USDT-TRC20 地址：TB6qQqtvmvBUb3GZot4Nt9x4gdiPbuAUXi</p>
-    <p>金额：¥<span id="usdtPrice"></span>（请务必选择 TRC20 网络）</p>
-  </div>
-  <button class="back-btn" onclick="history.back()">返回套餐页</button>
+    <h1>确认支付</h1>
+    <div class="price-info">金额：¥<span id="price"></span></div>
+
+    <div class="email-group">
+        <label for="userEmail" class="email-label">联系邮箱 (接收订单通知)</label>
+        <input type="email" id="userEmail" class="email-input" placeholder="请输入你的邮箱地址" required>
+    </div>
+
+    <div class="pay-group">
+        <button class="pay-btn alipay" id="alipayBtn">支付宝支付</button>
+        <button class="pay-btn wechat" onclick="alert('请联系TG客服 @kio_037 获取微信收款码')">微信支付</button>
+        <button class="pay-btn usdt" onclick="document.getElementById('usdtAddr').style.display='block'">USDT-TRC20 支付</button>
+    </div>
+
+    <div id="usdtAddr" class="usdt-info" style="display:none">
+        <p>USDT-TRC20 地址：TB6qQqtvmvBUb3GZot4Nt9x4gdiPbuAUXi</p>
+        <p>金额：¥<span id="usdtPrice"></span>（请务必选择 TRC20 网络）</p>
+    </div>
+
+    <button class="back-btn" onclick="history.back()">返回套餐页</button>
+
+    <div class="contact-info">
+        支付遇到问题？请联系客服<br>
+        📩 邮箱：<a href="mailto:tt8540950@gmail.com">tt8540950@gmail.com</a><br>
+        💬 TG客服：@kio_037<br>
+        📢 TG频道：<a href="https://t.me/clashmeta_0" target="_blank">https://t.me/clashmeta_0</a>
+    </div>
 </div>
 
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-const price = urlParams.get('price');
-document.getElementById('price').textContent = price;
-document.getElementById('usdtPrice').textContent = price;
+    const urlParams = new URLSearchParams(window.location.search);
+    const price = urlParams.get('price');
+    document.getElementById('price').textContent = price;
+    document.getElementById('usdtPrice').textContent = price;
 
-const alipayLinks = {
-  '86':  'https://qr.alipay.com/fkx139227knnt1pg99cnccd',
-  '128': 'https://qr.alipay.com/2m6102223jmfottxwf0ot34',
-  '168': 'https://qr.alipay.com/2m615402xridqxga5r5qb2a',
-  '268': 'https://qr.alipay.com/2m618509tqkbtu2j2ycpae8',
-  '288': 'https://qr.alipay.com/fkx15344lu4mphry14dth9f',
-  '376': 'https://qr.alipay.com/fkx12336ovpn6rykunj0jf8'
-};
+    const alipayLinks = {
+        '86':  'https://qr.alipay.com/fkx139227knnt1pg99cnccd',
+        '128': 'https://qr.alipay.com/2m6102223jmfottxwf0ot34',
+        '168': 'https://qr.alipay.com/2m615402xridqxga5r5qb2a',
+        '268': 'https://qr.alipay.com/2m618509tqkbtu2j2ycpae8',
+        '288': 'https://qr.alipay.com/fkx15344lu4mphry14dth9f',
+        '376': 'https://qr.alipay.com/fkx12336ovpn6rykunj0jf8'
+    };
 
-document.getElementById('alipayBtn').onclick = () => {
-  window.open(alipayLinks[price]);
-};
+    document.getElementById('alipayBtn').onclick = () => {
+        const userEmail = document.getElementById('userEmail').value.trim();
+        if(!userEmail){
+            alert("请填写联系邮箱，以便接收订单信息！");
+            return;
+        }
+        let alipayUrl = alipayLinks[price];
+        const connector = alipayUrl.includes('?') ? '&' : '?';
+        window.open(`${alipayUrl}${connector}email=${encodeURIComponent(userEmail)}`);
+    };
 </script>
 </body>
 </html>
