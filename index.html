@@ -1,215 +1,106 @@
+<?php
+session_start();
+if(!isset($_SESSION['user'])) {
+    header("Location:login.html");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>青梧高速机场</title>
+<title>跨境电商专线套餐</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,sans-serif}
-body{
-  background:#050508;
-  color:#e0e0ff;
-  min-height:100vh;
-  position:relative;
-  overflow-x:hidden;
-}
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 30%,rgba(79,206,234,0.15) 0%,transparent 40%),
-    radial-gradient(circle at 80% 70%,rgba(120,116,255,0.15) 0%,transparent 40%),
-    linear-gradient(135deg,#050508 0%,#101018 100%);
-  animation:bgMove 15s ease infinite alternate;
-  z-index:-2;
-}
-@keyframes bgMove{0%{transform:translate(0,0)}100%{transform:translate(-20px,-20px)}}
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-3 59c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM37 41c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm56 53c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-29-30c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-28 19c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29-22c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM21 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57 16c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM38 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm59 13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z' fill='%23333355' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
-  pointer-events:none;
-  z-index:-1;
-}
-.container{max-width:900px;margin:0 auto;padding:25px 20px}
-.header{text-align:center;padding:30px 0 20px}
-.header h1{
-  font-size:32px;
-  margin-bottom:8px;
-  background:linear-gradient(90deg,#4facfe,#007aff,#b563ff);
-  -webkit-background-clip:text;
-  color:transparent;
-  text-shadow:0 0 15px rgba(79,206,234,0.5),0 0 30px rgba(181,99,255,0.3);
-}
-.header p{font-size:14px;color:#8899aa;margin-top:4px}
-.package{
-  background:rgba(28,28,30,0.7);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(79,206,234,0.2);
-  border-radius:18px;
-  padding:24px;
-  margin-bottom:20px;
-  transition:all 0.3s ease;
-  position:relative;
-  overflow:hidden;
-}
-.package:hover{
-  transform:translateY(-6px) scale(1.01);
-  box-shadow:0 12px 24px rgba(79,206,234,0.25),0 0 20px rgba(181,99,255,0.2);
-  border-color:rgba(79,206,234,0.4);
-}
-.package-name{font-size:18px;font-weight:600;margin-bottom:10px;color:#e0e0ff}
-.package-desc{font-size:14px;color:#8899aa;margin-bottom:16px;line-height:1.6}
-.tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
-.tags span{
-  background:rgba(44,44,46,0.8);
-  padding:6px 12px;
-  border-radius:12px;
-  font-size:13px;
-  color:#c0d0ff;
-  border:1px solid rgba(120,116,255,0.2);
-}
-.price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.price{font-size:26px;font-weight:700;background:linear-gradient(90deg,#ff3b30,#ff6b6b);-webkit-background-clip:text;color:transparent}
-.buy-btn{
-  width:100%;
-  background:linear-gradient(90deg,#007aff,#00c6ff);
-  color:#fff;
-  border:none;
-  border-radius:14px;
-  padding:16px;
-  font-size:16px;
-  font-weight:500;
-  cursor:pointer;
-  transition:all 0.3s ease;
-  box-shadow:0 0 10px rgba(0,198,255,0.3);
-}
-.buy-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 20px rgba(0,198,255,0.5);
-}
-.section-title{
-  font-size:17px;
-  font-weight:500;
-  margin:30px 0 14px;
-  color:#a0d8ff;
-  border-left:3px solid #007aff;
-  padding-left:8px;
-}
-.footer{text-align:center;font-size:12px;color:#667788;margin-top:40px;padding-bottom:20px}
-.contact{
-  position:fixed;right:20px;bottom:20px;
-  background:rgba(30,30,30,0.8);
-  backdrop-filter:blur(10px);
-  padding:12px 16px;
-  border-radius:12px;
-  font-size:14px;
-  color:#fff;
-  box-shadow:0 0 10px rgba(181,99,255,0.3);
-  border:1px solid rgba(181,99,255,0.2);
-}
-.contact span{color:#b563ff;font-weight:500}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{background:#0b0f17;color:#fff;padding:30px 15px}
+.container{max-width:900px;margin:0 auto}
+.header{text-align:center;margin-bottom:40px}
+.header h1{font-size:28px;margin-bottom:10px}
+.header p{color:#9ca3af;font-size:16px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:#131825;border-radius:20px;padding:28px;position:relative;overflow:hidden;border:1px solid #252b3a}
+.card h3{font-size:19px;margin-bottom:10px}
+.price{font-size:26px;font-weight:700;color:#38bdf7;margin:12px 0 20px}
+.features{display:flex;flex-direction:column;gap:10px;font-size:15px;color:#e2e8f0}
+.features div::before{content:"•";color:#38bdf7;font-weight:bold;margin-right:8px}
+
+.btn{width:100%;margin-top:10px;padding:14px;border-radius:14px;border:none;font-size:15px;font-weight:600;cursor:pointer}
+.btn.alipay{background:#1677ff;color:#fff}
+.btn.custom{background:#0ea5e9;color:#fff}
+.btn:hover{opacity:.9}
 </style>
 </head>
+
 <body>
 <div class="container">
   <div class="header">
-    <h1>青梧高速机场</h1>
-    <p>高速稳定 / 多地区节点 / 全平台支持 / 24小时自动运维</p>
+    <h1>跨境电商专线 · 年套餐</h1>
+    <p>高速稳定线路 | 美国、新加坡、香港、马来西亚等15国优质节点</p>
   </div>
 
-  <div class="section-title">家用流媒体套餐</div>
-  <div class="package">
-    <div class="package-name">家用流媒体套餐</div>
-    <div class="package-desc">家用稳定线路，流媒体秒开，GPT流畅使用</div>
-    <div class="tags">
-      <span>1000G/月流量</span><span>5台设备在线</span><span>50+国家节点</span>
-      <span>奈飞全解锁</span><span>GPT稳定访问</span><span>高速专线</span>
+  <div class="grid">
+    <div class="card">
+      <h3>年度基础版</h3>
+      <div class="price">¥198</div>
+      <div class="features">
+        <div>高速稳定电商线路</div>
+        <div>15国通用节点</div>
+        <div>单设备在线</div>
+        <div>月流量 100GB</div>
+      </div>
+      <button class="btn alipay" onclick="location.href='pay.html?price=198'">立即购买</button>
     </div>
-    <div class="price-row"><div class="price">¥128 / 年</div></div>
-    <button class="buy-btn" onclick="location.href='pay.html?price=128'">立即购买</button>
-  </div>
 
-  <div class="package">
-    <div class="package-name">高端流量套餐</div>
-    <div class="package-desc">大流量需求，全家共享，高清观影无压力</div>
-    <div class="tags">
-      <span>3000G/月流量</span><span>5台设备在线</span><span>50+国家节点</span>
-      <span>奈飞全解锁</span><span>GPT稳定访问</span><span>高速专线</span>
+    <div class="card">
+      <h3>年度标准版</h3>
+      <div class="price">¥298</div>
+      <div class="features">
+        <div>精品电商高速线路</div>
+        <div>15国优质原生IP</div>
+        <div>双设备同时在线</div>
+        <div>月流量 320GB</div>
+      </div>
+      <button class="btn alipay" onclick="location.href='pay.html?price=298'">立即购买</button>
     </div>
-    <div class="price-row"><div class="price">¥168 / 年</div></div>
-    <button class="buy-btn" onclick="location.href='pay.html?price=168'">立即购买</button>
-  </div>
 
-  <div class="package">
-    <div class="package-name">不限时畅享套餐</div>
-    <div class="package-desc">中等流量，日常追剧、下载通用</div>
-    <div class="tags">
-      <span>2T流量/年</span><span>不限时使用</span><span>5台设备在线</span>
-      <span>50+国家节点</span><span>奈飞全解锁</span><span>GPT稳定访问</span>
+    <div class="card">
+      <h3>年度高级版</h3>
+      <div class="price">¥428</div>
+      <div class="features">
+        <div>企业级高速专线</div>
+        <div>15国高端稳定节点</div>
+        <div>三设备同时在线</div>
+        <div>月流量 600GB</div>
+      </div>
+      <button class="btn alipay" onclick="location.href='pay.html?price=428'">立即购买</button>
     </div>
-    <div class="price-row"><div class="price">¥86 / 年</div></div>
-    <button class="buy-btn" onclick="location.href='pay.html?price=86'">立即购买</button>
-  </div>
 
-  <div class="package">
-    <div class="package-name">无限流量旗舰套餐</div>
-    <div class="package-desc">完全不限流量，企业/工作室/全家通用</div>
-    <div class="tags">
-      <span>无限流量</span><span>5台设备在线</span><span>50+国家节点</span>
-      <span>奈飞全解锁</span><span>GPT稳定访问</span><span>高速专线</span>
+    <div class="card">
+      <h3>年度旗舰版</h3>
+      <div class="price">¥598</div>
+      <div class="features">
+        <div>顶级独享高速线路</div>
+        <div>15国原生优质IP</div>
+        <div>四设备同时在线</div>
+        <div>月流量 1000GB</div>
+      </div>
+      <button class="btn alipay" onclick="location.href='pay.html?price=598'">立即购买</button>
     </div>
-    <div class="price-row"><div class="price">¥288 / 年</div></div>
-    <button class="buy-btn" onclick="location.href='pay.html?price=288'">立即购买</button>
-  </div>
 
-  <div class="section-title">电商专用套餐</div>
-  <div class="package">
-    <div class="package-name">电商初级套餐</div>
-    <div class="package-desc">适合个人店铺运营、日常后台操作</div>
-    <div class="tags">
-      <span>100G/月流量</span><span>港深专线</span><span>沪深专线</span><span>电商稳定加速</span>
+    <div class="card">
+      <h3>专线定制</h3>
+      <div class="price"></div>
+      <div class="features">
+        <div>全国定制高速专线</div>
+        <div>住宅原生IP线路</div>
+        <div>大流量独享定制</div>
+        <div>企业工作室专用</div>
+      </div>
+      <button class="btn custom" onclick="location.href='pay.html'">联系客服定制</button>
     </div>
-    <div class="price-row"><div class="price">¥168 / 年</div></div>
-    <button class="buy-btn" onclick="location.href='pay.html?price=168'">立即购买</button>
   </div>
-
-  <div class="package">
-    <div class="package-name">电商中级套餐</div>
-    <div class="package-desc">适合多店铺管理、日常上传下载</div>
-    <div class="tags">
-      <span>320G/月流量</span><span>港深专线</span><span>沪深专线</span><span>电商专用线路</span>
-    </div>
-    <div class="price-row"><div class="price">¥268 / 年</div></div>
-    <button class="buy-btn" onclick="location.href='pay.html?price=268'">立即购买</button>
-  </div>
-
-  <div class="package">
-    <div class="package-name">电商直播高速套餐</div>
-    <div class="package-desc">高清直播、大流量上传、跨境直播专用</div>
-    <div class="tags">
-      <span>500G/月流量</span><span>高速专用线路</span><span>低延迟不卡顿</span><span>直播专属优化</span>
-    </div>
-    <div class="price-row"><div class="price">¥376 / 年</div></div>
-    <button class="buy-btn" onclick="location.href='pay.html?price=376'">立即购买</button>
-  </div>
-
-  <div class="section-title">企业专线定制</div>
-  <div class="package">
-    <div class="package-name">专线定制服务</div>
-    <div class="package-desc">支持企业/工作室/跨境团队专属线路定制，独享带宽，高稳定性，高安全</div>
-    <div class="tags">
-      <span>独享带宽</span><span>一对一技术对接</span><span>定制地区线路</span>
-      <span>高防稳定</span><span>企业级SLA保障</span>
-    </div>
-    <div class="price-row"><div class="price">咨询客服</div></div>
-    <button class="buy-btn" onclick="alert('请联系TG客服 @kio_037 进行专线定制')">联系定制</button>
-  </div>
-
-  <div class="footer">青梧高速机场 © 2026 All Rights Reserved</div>
 </div>
-<div class="contact">TG客服 <span>@kio_037</span></div>
 </body>
 </html>
