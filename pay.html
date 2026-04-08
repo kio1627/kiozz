@@ -34,7 +34,7 @@ h1{text-align:center;margin-bottom:30px}
     <div class="price-info">金额：¥<span id="price"></span></div>
 
     <div class="pay-group">
-        <button class="pay-btn alipay" id="alipayBtn">支付宝支付</button>
+        <button class="pay-btn alipay" id="alipayBtn" disabled>请先填写邮箱</button>
         <button class="pay-btn usdt" onclick="document.getElementById('usdtAddr').style.display='block'">USDT-TRC20 支付</button>
     </div>
 
@@ -45,8 +45,8 @@ h1{text-align:center;margin-bottom:30px}
     </div>
 
     <div class="email-box">
-        <label>接收账号信息邮箱</label>
-        <input type="email" id="email" placeholder="请输入您的邮箱" onblur="saveEmail()">
+        <label>接收账号信息邮箱（必填）</label>
+        <input type="email" id="email" placeholder="请输入您的邮箱" oninput="checkEmail()">
     </div>
 
     <button class="back-btn" onclick="history.back()">返回套餐页</button>
@@ -63,7 +63,6 @@ const price = urlParams.get('price');
 document.getElementById('price').textContent = price;
 document.getElementById('usdtPrice').textContent = price;
 
-// 已替换你最新的4个支付宝链接
 const alipayLinks = {
     198: 'https://qr.alipay.com/2m612968ru7xa3hgwnruf3d',
     298: 'https://qr.alipay.com/2m6178652zvuxmxly0uax52',
@@ -71,19 +70,33 @@ const alipayLinks = {
     598: 'https://qr.alipay.com/2m615160pzb8cct5pynq2f5'
 };
 
-document.getElementById('alipayBtn').onclick = () => {
-    window.open(alipayLinks[price]);
-};
+// 检查邮箱，填了才解锁付款
+function checkEmail() {
+    let email = document.getElementById('email').value.trim();
+    let btn = document.getElementById('alipayBtn');
+    
+    if (email.includes('@') && email.includes('.')) {
+        btn.disabled = false;
+        btn.textContent = '支付宝支付';
+    } else {
+        btn.disabled = true;
+        btn.textContent = '请先填写邮箱';
+    }
+}
 
-function saveEmail() {
-    let email = document.getElementById('email').value;
-    if (!email) return;
+document.getElementById('alipayBtn').onclick = function(){
+    let email = document.getElementById('email').value.trim();
+    if(!email) return;
+
+    // 保存邮箱
     fetch('save_email.php', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: 'email=' + encodeURIComponent(email) + '&price=' + price
+    }).then(() => {
+        window.open(alipayLinks[price]);
     });
-}
+};
 </script>
 </body>
 </html>
