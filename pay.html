@@ -13,10 +13,9 @@
         .pay-group{display:flex;flex-direction:column;gap:15px}
         .pay-btn{padding:18px;border:none;border-radius:14px;font-size:16px;font-weight:500;cursor:pointer}
         .pay-btn.alipay{background:#1677ff;color:#fff}
-        .pay-btn.wechat{background:#07c160;color:#fff}
         .pay-btn.usdt{background:#26a69a;color:#fff}
         .back-btn{margin-top:30px;width:100%;padding:16px;background:#333;color:#fff;border:none;border-radius:14px;cursor:pointer}
-        .usdt-info{background:#1e1e1e;padding:15px;border-radius:12px;margin-top:10px;word-break:break-all;font-size:14px}
+        .usdt-info{background:#1e1e1e;padding:15px;border-radius:12px;margin-top:10px;word-break:break-all;font-size:14px;display:none}
         .email-group{margin-bottom:20px}
         .email-label{display:block;margin-bottom:8px;font-size:14px;color:#ccc}
         .email-input{
@@ -44,11 +43,10 @@
 
     <div class="pay-group">
         <button class="pay-btn alipay" id="alipayBtn">支付宝支付</button>
-        <button class="pay-btn wechat" onclick="alert('请联系TG客服 @kio_037 获取微信收款码')">微信支付</button>
         <button class="pay-btn usdt" onclick="document.getElementById('usdtAddr').style.display='block'">USDT-TRC20 支付</button>
     </div>
 
-    <div id="usdtAddr" class="usdt-info" style="display:none">
+    <div id="usdtAddr" class="usdt-info">
         <p>USDT-TRC20 地址：TB6qQqtvmvBUb3GZot4Nt9x4gdiPbuAUXi</p>
         <p>金额：¥<span id="usdtPrice"></span>（请务必选择 TRC20 网络）</p>
     </div>
