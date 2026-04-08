@@ -17,7 +17,7 @@ h1{text-align:center;margin-bottom:30px}
 .back-btn{margin-top:30px;width:100%;padding:16px;background:#333;color:#fff;border:none;border-radius:14px;cursor:pointer}
 .usdt-info{background:#1e1e1e;padding:15px;border-radius:12px;margin-top:10px;word-break:break-all;font-size:14px;display:none}
 
-.email-box{margin-top:22px}
+.email-box{margin-top:24px}
 .email-box label{display:block;margin-bottom:8px;color:#ccc;font-size:14px}
 .email-box input{
     width:100%;padding:14px;background:#1e1e1e;border:1px solid #333;
@@ -44,7 +44,6 @@ h1{text-align:center;margin-bottom:30px}
         <p style="color:#ff4444;margin-top:6px">请务必选择 TRC20 网络</p>
     </div>
 
-    <!-- 邮箱输入框，输完自动记录 -->
     <div class="email-box">
         <label>接收账号信息邮箱</label>
         <input type="email" id="email" placeholder="请输入您的邮箱" onblur="saveEmail()">
@@ -64,18 +63,18 @@ const price = urlParams.get('price');
 document.getElementById('price').textContent = price;
 document.getElementById('usdtPrice').textContent = price;
 
+// 已替换你最新的4个支付宝链接
 const alipayLinks = {
-    198: 'https://qr.alipay.com/fkx10657u6sedo8k4c9wu7a',
-    298: 'https://qr.alipay.com/fkx1925368sfipa0btliw9f',
-    428: 'https://qr.alipay.com/fkx14856lwxhz30uyy0vqbf',
-    598: 'https://qr.alipay.com/fkx10456neszxzhwy2ir550'
+    198: 'https://qr.alipay.com/2m612968ru7xa3hgwnruf3d',
+    298: 'https://qr.alipay.com/2m6178652zvuxmxly0uax52',
+    428: 'https://qr.alipay.com/2m619974luiywqedkvjv6d2',
+    598: 'https://qr.alipay.com/2m615160pzb8cct5pynq2f5'
 };
 
 document.getElementById('alipayBtn').onclick = () => {
     window.open(alipayLinks[price]);
 };
 
-// 输完邮箱自动保存，你在后台就能看到
 function saveEmail() {
     let email = document.getElementById('email').value;
     if (!email) return;
