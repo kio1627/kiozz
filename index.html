@@ -5,25 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>青梧高速机场</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{background:#121212;color:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,sans-serif}
+body{
+  background:#050508;
+  color:#e0e0ff;
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(79,206,234,0.15) 0%,transparent 40%),
+    radial-gradient(circle at 80% 70%,rgba(120,116,255,0.15) 0%,transparent 40%),
+    linear-gradient(135deg,#050508 0%,#101018 100%);
+  animation:bgMove 15s ease infinite alternate;
+  z-index:-2;
+}
+@keyframes bgMove{0%{transform:translate(0,0)}100%{transform:translate(-20px,-20px)}}
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-3 59c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM37 41c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm56 53c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-29-30c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-28 19c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29-22c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM21 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57 16c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM38 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm59 13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5z' fill='%23333355' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:-1;
+}
 .container{max-width:900px;margin:0 auto;padding:25px 20px}
 .header{text-align:center;padding:30px 0 20px}
-.header h1{font-size:26px;margin-bottom:8px;background:linear-gradient(90deg,#4facfe,#007aff);-webkit-background-clip:text;color:transparent}
-.header p{font-size:14px;color:#aaa}
-.package{background:linear-gradient(145deg,#1c1c1e,#252527);border-radius:18px;padding:24px;margin-bottom:20px}
-.package-name{font-size:18px;font-weight:600;margin-bottom:10px}
-.package-desc{font-size:14px;color:#aaa;margin-bottom:16px;line-height:1.6}
+.header h1{
+  font-size:32px;
+  margin-bottom:8px;
+  background:linear-gradient(90deg,#4facfe,#007aff,#b563ff);
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 0 15px rgba(79,206,234,0.5),0 0 30px rgba(181,99,255,0.3);
+}
+.header p{font-size:14px;color:#8899aa;margin-top:4px}
+.package{
+  background:rgba(28,28,30,0.7);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(79,206,234,0.2);
+  border-radius:18px;
+  padding:24px;
+  margin-bottom:20px;
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+.package:hover{
+  transform:translateY(-6px) scale(1.01);
+  box-shadow:0 12px 24px rgba(79,206,234,0.25),0 0 20px rgba(181,99,255,0.2);
+  border-color:rgba(79,206,234,0.4);
+}
+.package-name{font-size:18px;font-weight:600;margin-bottom:10px;color:#e0e0ff}
+.package-desc{font-size:14px;color:#8899aa;margin-bottom:16px;line-height:1.6}
 .tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
-.tags span{background:#2c2c2e;padding:6px 12px;border-radius:12px;font-size:13px;color:#ddd}
+.tags span{
+  background:rgba(44,44,46,0.8);
+  padding:6px 12px;
+  border-radius:12px;
+  font-size:13px;
+  color:#c0d0ff;
+  border:1px solid rgba(120,116,255,0.2);
+}
 .price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.price{font-size:26px;font-weight:700;color:#ff3b30}
-.buy-btn{width:100%;background:#007aff;color:#fff;border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:500;cursor:pointer}
-.buy-btn:hover{opacity:0.9}
-.section-title{font-size:17px;font-weight:500;margin:30px 0 14px}
-.footer{text-align:center;font-size:12px;color:#666;margin-top:40px;padding-bottom:20px}
-.contact{position:fixed;right:20px;bottom:20px;background:#1e1e1e;padding:12px 16px;border-radius:12px;font-size:14px;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-.contact span{color:#007aff;font-weight:500}
+.price{font-size:26px;font-weight:700;background:linear-gradient(90deg,#ff3b30,#ff6b6b);-webkit-background-clip:text;color:transparent}
+.buy-btn{
+  width:100%;
+  background:linear-gradient(90deg,#007aff,#00c6ff);
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:16px;
+  font-size:16px;
+  font-weight:500;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 0 10px rgba(0,198,255,0.3);
+}
+.buy-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 20px rgba(0,198,255,0.5);
+}
+.section-title{
+  font-size:17px;
+  font-weight:500;
+  margin:30px 0 14px;
+  color:#a0d8ff;
+  border-left:3px solid #007aff;
+  padding-left:8px;
+}
+.footer{text-align:center;font-size:12px;color:#667788;margin-top:40px;padding-bottom:20px}
+.contact{
+  position:fixed;right:20px;bottom:20px;
+  background:rgba(30,30,30,0.8);
+  backdrop-filter:blur(10px);
+  padding:12px 16px;
+  border-radius:12px;
+  font-size:14px;
+  color:#fff;
+  box-shadow:0 0 10px rgba(181,99,255,0.3);
+  border:1px solid rgba(181,99,255,0.2);
+}
+.contact span{color:#b563ff;font-weight:500}
 </style>
 </head>
 <body>
@@ -32,6 +119,7 @@ body{background:#121212;color:#fff}
     <h1>青梧高速机场</h1>
     <p>高速稳定 / 多地区节点 / 全平台支持 / 24小时自动运维</p>
   </div>
+
   <div class="section-title">家用流媒体套餐</div>
   <div class="package">
     <div class="package-name">家用流媒体套餐</div>
@@ -43,6 +131,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">¥128 / 年</div></div>
     <button class="buy-btn" onclick="location.href='pay.html?price=128'">立即购买</button>
   </div>
+
   <div class="package">
     <div class="package-name">高端流量套餐</div>
     <div class="package-desc">大流量需求，全家共享，高清观影无压力</div>
@@ -53,6 +142,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">¥168 / 年</div></div>
     <button class="buy-btn" onclick="location.href='pay.html?price=168'">立即购买</button>
   </div>
+
   <div class="package">
     <div class="package-name">不限时畅享套餐</div>
     <div class="package-desc">中等流量，日常追剧、下载通用</div>
@@ -63,6 +153,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">¥86 / 年</div></div>
     <button class="buy-btn" onclick="location.href='pay.html?price=86'">立即购买</button>
   </div>
+
   <div class="package">
     <div class="package-name">无限流量旗舰套餐</div>
     <div class="package-desc">完全不限流量，企业/工作室/全家通用</div>
@@ -73,6 +164,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">¥288 / 年</div></div>
     <button class="buy-btn" onclick="location.href='pay.html?price=288'">立即购买</button>
   </div>
+
   <div class="section-title">电商专用套餐</div>
   <div class="package">
     <div class="package-name">电商初级套餐</div>
@@ -83,6 +175,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">¥168 / 年</div></div>
     <button class="buy-btn" onclick="location.href='pay.html?price=168'">立即购买</button>
   </div>
+
   <div class="package">
     <div class="package-name">电商中级套餐</div>
     <div class="package-desc">适合多店铺管理、日常上传下载</div>
@@ -92,6 +185,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">¥268 / 年</div></div>
     <button class="buy-btn" onclick="location.href='pay.html?price=268'">立即购买</button>
   </div>
+
   <div class="package">
     <div class="package-name">电商直播高速套餐</div>
     <div class="package-desc">高清直播、大流量上传、跨境直播专用</div>
@@ -101,6 +195,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">¥376 / 年</div></div>
     <button class="buy-btn" onclick="location.href='pay.html?price=376'">立即购买</button>
   </div>
+
   <div class="section-title">企业专线定制</div>
   <div class="package">
     <div class="package-name">专线定制服务</div>
@@ -112,6 +207,7 @@ body{background:#121212;color:#fff}
     <div class="price-row"><div class="price">咨询客服</div></div>
     <button class="buy-btn" onclick="alert('请联系TG客服 @kio_037 进行专线定制')">联系定制</button>
   </div>
+
   <div class="footer">青梧高速机场 © 2026 All Rights Reserved</div>
 </div>
 <div class="contact">TG客服 <span>@kio_037</span></div>
