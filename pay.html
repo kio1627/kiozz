@@ -17,6 +17,13 @@ h1{text-align:center;margin-bottom:30px}
 .back-btn{margin-top:30px;width:100%;padding:16px;background:#333;color:#fff;border:none;border-radius:14px;cursor:pointer}
 .usdt-info{background:#1e1e1e;padding:15px;border-radius:12px;margin-top:10px;word-break:break-all;font-size:14px;display:none}
 
+.email-box{margin-top:22px}
+.email-box label{display:block;margin-bottom:8px;color:#ccc;font-size:14px}
+.email-box input{
+    width:100%;padding:14px;background:#1e1e1e;border:1px solid #333;
+    border-radius:14px;color:#fff;font-size:16px;outline:none
+}
+
 .footer-note{margin-top:20px;font-size:12px;color:#666;text-align:center;line-height:1.6}
 </style>
 </head>
@@ -37,11 +44,17 @@ h1{text-align:center;margin-bottom:30px}
         <p style="color:#ff4444;margin-top:6px">请务必选择 TRC20 网络</p>
     </div>
 
+    <!-- 邮箱输入框，输完自动记录 -->
+    <div class="email-box">
+        <label>接收账号信息邮箱</label>
+        <input type="email" id="email" placeholder="请输入您的邮箱" onblur="saveEmail()">
+    </div>
+
     <button class="back-btn" onclick="history.back()">返回套餐页</button>
 
     <div class="footer-note">
         本服务仅用于合法跨境电商运营<br>
-        支付后请联系客服核对订单
+        支付后将为您发送账号至邮箱
     </div>
 </div>
 
@@ -61,6 +74,17 @@ const alipayLinks = {
 document.getElementById('alipayBtn').onclick = () => {
     window.open(alipayLinks[price]);
 };
+
+// 输完邮箱自动保存，你在后台就能看到
+function saveEmail() {
+    let email = document.getElementById('email').value;
+    if (!email) return;
+    fetch('save_email.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'email=' + encodeURIComponent(email) + '&price=' + price
+    });
+}
 </script>
 </body>
 </html>
