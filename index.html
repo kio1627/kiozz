@@ -1,106 +1,615 @@
-<?php
-session_start();
-if(!isset($_SESSION['user'])) {
-    header("Location:login.html");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>跨境电商专线套餐</title>
+<title>跨境电商专线</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-body{background:#0b0f17;color:#fff;padding:30px 15px}
-.container{max-width:900px;margin:0 auto}
-.header{text-align:center;margin-bottom:40px}
-.header h1{font-size:28px;margin-bottom:10px}
-.header p{color:#9ca3af;font-size:16px}
+*{
+    box-sizing:border-box;
+}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.card{background:#131825;border-radius:20px;padding:28px;position:relative;overflow:hidden;border:1px solid #252b3a}
-.card h3{font-size:19px;margin-bottom:10px}
-.price{font-size:26px;font-weight:700;color:#38bdf7;margin:12px 0 20px}
-.features{display:flex;flex-direction:column;gap:10px;font-size:15px;color:#e2e8f0}
-.features div::before{content:"•";color:#38bdf7;font-weight:bold;margin-right:8px}
+body{
+    margin:0;
+    background:#070b14;
+    color:#eef4ff;
+    font-family:-apple-system,BlinkMacSystemFont,
+    "Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
 
-.btn{width:100%;margin-top:10px;padding:14px;border-radius:14px;border:none;font-size:15px;font-weight:600;cursor:pointer}
-.btn.alipay{background:#1677ff;color:#fff}
-.btn.custom{background:#0ea5e9;color:#fff}
-.btn:hover{opacity:.9}
+body::before{
+    content:"";
+    position:fixed;
+    inset:-30%;
+    background:
+    radial-gradient(circle at 50% 10%,#123b6b66,transparent 35%),
+    radial-gradient(circle at 85% 45%,#174b9b33,transparent 30%);
+    pointer-events:none;
+}
+
+.container{
+    position:relative;
+    max-width:1100px;
+    margin:auto;
+    padding:55px 20px 80px;
+}
+
+.hero{
+    text-align:center;
+    padding:20px 0 45px;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 17px;
+    border:1px solid #28537d;
+    border-radius:30px;
+    color:#70bdff;
+    background:#0d1c2d;
+    font-size:13px;
+}
+
+h1{
+    font-size:46px;
+    margin:22px 0 12px;
+}
+
+.hero p{
+    color:#9da9bb;
+    font-size:16px;
+    line-height:1.8;
+    margin:0 auto;
+    max-width:760px;
+}
+
+.section{
+    margin-top:30px;
+}
+
+.section-title{
+    font-size:24px;
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.card{
+    position:relative;
+    background:linear-gradient(145deg,#111a29,#0d1420);
+    border:1px solid #26364b;
+    border-radius:24px;
+    padding:28px;
+    box-shadow:0 18px 50px #0005;
+}
+
+.card.recommend{
+    border-color:#3189d8;
+}
+
+.tag{
+    position:absolute;
+    right:20px;
+    top:18px;
+    background:#1679d9;
+    color:white;
+    padding:6px 11px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.plan-name{
+    font-size:20px;
+    font-weight:700;
+}
+
+.price{
+    font-size:42px;
+    font-weight:800;
+    margin:14px 0;
+}
+
+.price span{
+    font-size:14px;
+    color:#8795a8;
+    font-weight:400;
+}
+
+.desc{
+    color:#9da9bb;
+    font-size:14px;
+    margin-bottom:18px;
+}
+
+.features{
+    list-style:none;
+    padding:0;
+    margin:0 0 22px;
+}
+
+.features li{
+    padding:7px 0;
+    font-size:14px;
+    color:#dce5f2;
+}
+
+.features li::before{
+    content:"✓";
+    color:#55b5ff;
+    margin-right:9px;
+}
+
+.buy-btn{
+    width:100%;
+    border:0;
+    border-radius:14px;
+    padding:14px;
+    background:#187ee0;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.buy-btn:hover{
+    filter:brightness(1.12);
+}
+
+.custom{
+    margin-top:30px;
+    padding:23px;
+    border:1px solid #2a5278;
+    border-radius:20px;
+    background:#0d1b2c;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.custom-title{
+    font-size:19px;
+    font-weight:700;
+}
+
+.custom-text{
+    margin-top:7px;
+    color:#8f9caf;
+    font-size:13px;
+}
+
+.custom a{
+    flex:none;
+    background:#187ee0;
+    color:white;
+    padding:12px 20px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:700;
+    font-size:14px;
+}
+
+@media(max-width:700px){
+
+    h1{
+        font-size:36px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .custom{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .custom a{
+        width:100%;
+        text-align:center;
+    }
+}
 </style>
 </head>
 
 <body>
+
 <div class="container">
-  <div class="header">
-    <h1>跨境电商专线 · 年套餐</h1>
-    <p>高速稳定线路 | 美国、新加坡、香港、马来西亚等15国优质节点</p>
-  </div>
 
-  <div class="grid">
-    <div class="card">
-      <h3>年度基础版</h3>
-      <div class="price">¥198</div>
-      <div class="features">
-        <div>高速稳定电商线路</div>
-        <div>15国通用节点</div>
-        <div>单设备在线</div>
-        <div>月流量 100GB</div>
-      </div>
-      <button class="btn alipay" onclick="location.href='pay.html?price=198'">立即购买</button>
+    <div class="hero">
+
+        <div class="badge">
+            CROSS-BORDER NETWORK
+        </div>
+
+        <h1>
+            跨境电商专线
+        </h1>
+
+        <p>
+            高速线路、马来西亚、印尼、菲律宾、澳大利亚等多地区优质节点
+        </p>
+
     </div>
 
-    <div class="card">
-      <h3>年度标准版</h3>
-      <div class="price">¥298</div>
-      <div class="features">
-        <div>精品电商高速线路</div>
-        <div>15国优质原生IP</div>
-        <div>双设备同时在线</div>
-        <div>月流量 320GB</div>
-      </div>
-      <button class="btn alipay" onclick="location.href='pay.html?price=298'">立即购买</button>
+
+    <!-- 年度套餐 -->
+
+    <div class="section">
+
+        <div class="section-title">
+            年度套餐
+        </div>
+
+        <div class="grid">
+
+
+            <!-- 198 -->
+
+            <div class="card">
+
+                <div class="plan-name">
+                    年度基础版
+                </div>
+
+                <div class="price">
+                    ¥198
+                    <span>/ 年</span>
+                </div>
+
+                <div class="desc">
+                    适合日常跨境电商使用
+                </div>
+
+                <ul class="features">
+
+                    <li>月流量 100GB</li>
+                    <li>15国通用节点</li>
+                    <li>家宽、住宅线路优化</li>
+                    <li>支持安卓、苹果、电脑</li>
+
+                </ul>
+
+                <button
+                class="buy-btn"
+                onclick="buy(
+                '年度基础版',
+                '198',
+                '100GB/月',
+                '1年',
+                'https://qr.alipay.com/2m613400af7pbmtjiv10b72'
+                )">
+                    立即购买
+                </button>
+
+            </div>
+
+
+            <!-- 299 -->
+
+            <div class="card">
+
+                <div class="plan-name">
+                    年度标准版
+                </div>
+
+                <div class="price">
+                    ¥299
+                    <span>/ 年</span>
+                </div>
+
+                <div class="desc">
+                    更充足的月度流量
+                </div>
+
+                <ul class="features">
+
+                    <li>月流量 320GB</li>
+                    <li>15国通用节点</li>
+                    <li>家宽、住宅线路优化</li>
+                    <li>支持安卓、苹果、电脑</li>
+
+                </ul>
+
+                <button
+                class="buy-btn"
+                onclick="buy(
+                '年度标准版',
+                '299',
+                '320GB/月',
+                '1年',
+                'https://qr.alipay.com/2m614260tkitrpmr3zvhja6'
+                )">
+                    立即购买
+                </button>
+
+            </div>
+
+
+            <!-- 388 -->
+
+            <div class="card recommend">
+
+                <div class="tag">
+                    推荐
+                </div>
+
+                <div class="plan-name">
+                    年度高级版
+                </div>
+
+                <div class="price">
+                    ¥388
+                    <span>/ 年</span>
+                </div>
+
+                <div class="desc">
+                    适合高频跨境业务
+                </div>
+
+                <ul class="features">
+
+                    <li>月流量 750GB</li>
+                    <li>15国通用节点</li>
+                    <li>家宽、住宅线路优化</li>
+                    <li>支持安卓、苹果、电脑</li>
+
+                </ul>
+
+                <button
+                class="buy-btn"
+                onclick="buy(
+                '年度高级版',
+                '388',
+                '750GB/月',
+                '1年',
+                'https://qr.alipay.com/2m610673n9ezcfdyuz1mv42'
+                )">
+                    立即购买
+                </button>
+
+            </div>
+
+
+            <!-- 499 -->
+
+            <div class="card">
+
+                <div class="plan-name">
+                    年度旗舰版
+                </div>
+
+                <div class="price">
+                    ¥499
+                    <span>/ 年</span>
+                </div>
+
+                <div class="desc">
+                    大流量年度方案
+                </div>
+
+                <ul class="features">
+
+                    <li>月流量 1000GB</li>
+                    <li>15国通用节点</li>
+                    <li>家宽、住宅线路优化</li>
+                    <li>支持安卓、苹果、电脑</li>
+
+                </ul>
+
+                <button
+                class="buy-btn"
+                onclick="buy(
+                '年度旗舰版',
+                '499',
+                '1000GB/月',
+                '1年',
+                'https://qr.alipay.com/2m614603hhcl7jhiijopied'
+                )">
+                    立即购买
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="card">
-      <h3>年度高级版</h3>
-      <div class="price">¥428</div>
-      <div class="features">
-        <div>企业级高速专线</div>
-        <div>15国高端稳定节点</div>
-        <div>三设备同时在线</div>
-        <div>月流量 600GB</div>
-      </div>
-      <button class="btn alipay" onclick="location.href='pay.html?price=428'">立即购买</button>
+
+    <!-- 一次性套餐 -->
+
+    <div class="section">
+
+        <div class="section-title">
+            一次性流量套餐
+        </div>
+
+        <div class="grid">
+
+
+            <!-- 168 -->
+
+            <div class="card">
+
+                <div class="plan-name">
+                    一次性 320G
+                </div>
+
+                <div class="price">
+                    ¥168
+                </div>
+
+                <div class="desc">
+                    一次性流量，无月度重置
+                </div>
+
+                <ul class="features">
+
+                    <li>总流量 320GB</li>
+                    <li>15国通用节点</li>
+                    <li>家宽、住宅线路优化</li>
+                    <li>支持安卓、苹果、电脑</li>
+
+                </ul>
+
+                <button
+                class="buy-btn"
+                onclick="buy(
+                '一次性 320G',
+                '168',
+                '320GB',
+                '一次性',
+                'https://qr.alipay.com/2m617533np1abkgfi0t7s23'
+                )">
+                    立即购买
+                </button>
+
+            </div>
+
+
+            <!-- 268 -->
+
+            <div class="card">
+
+                <div class="plan-name">
+                    一次性 750G
+                </div>
+
+                <div class="price">
+                    ¥268
+                </div>
+
+                <div class="desc">
+                    一次性流量，无月度重置
+                </div>
+
+                <ul class="features">
+
+                    <li>总流量 750GB</li>
+                    <li>15国通用节点</li>
+                    <li>家宽、住宅线路优化</li>
+                    <li>支持安卓、苹果、电脑</li>
+
+                </ul>
+
+                <button
+                class="buy-btn"
+                onclick="buy(
+                '一次性 750G',
+                '268',
+                '750GB',
+                '一次性',
+                'https://qr.alipay.com/2m617531ahed49xtlkfof15'
+                )">
+                    立即购买
+                </button>
+
+            </div>
+
+
+            <!-- 388 -->
+
+            <div class="card recommend">
+
+                <div class="tag">
+                    大流量
+                </div>
+
+                <div class="plan-name">
+                    一次性 2800G
+                </div>
+
+                <div class="price">
+                    ¥388
+                </div>
+
+                <div class="desc">
+                    大容量一次性流量
+                </div>
+
+                <ul class="features">
+
+                    <li>总流量 2800GB</li>
+                    <li>15国通用节点</li>
+                    <li>家宽、住宅线路优化</li>
+                    <li>支持安卓、苹果、电脑</li>
+
+                </ul>
+
+                <button
+                class="buy-btn"
+                onclick="buy(
+                '一次性 2800G',
+                '388',
+                '2800GB',
+                '一次性',
+                'https://qr.alipay.com/2m610673n9ezcfdyuz1mv42'
+                )">
+                    立即购买
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="card">
-      <h3>年度旗舰版</h3>
-      <div class="price">¥598</div>
-      <div class="features">
-        <div>顶级独享高速线路</div>
-        <div>15国原生优质IP</div>
-        <div>四设备同时在线</div>
-        <div>月流量 1000GB</div>
-      </div>
-      <button class="btn alipay" onclick="location.href='pay.html?price=598'">立即购买</button>
+
+    <!-- 专线定制 -->
+
+    <div class="custom">
+
+        <div>
+
+            <div class="custom-title">
+                专线定制
+            </div>
+
+            <div class="custom-text">
+                需要定制线路、节点或流量方案？联系客服咨询
+            </div>
+
+        </div>
+
+        <a
+        href="https://t.me/kio_037"
+        target="_blank"
+        >
+            联系定制
+        </a>
+
     </div>
 
-    <div class="card">
-      <h3>专线定制</h3>
-      <div class="price"></div>
-      <div class="features">
-        <div>全国定制高速专线</div>
-        <div>住宅原生IP线路</div>
-        <div>大流量独享定制</div>
-        <div>企业工作室专用</div>
-      </div>
-      <button class="btn custom" onclick="location.href='pay.html'">联系客服定制</button>
-    </div>
-  </div>
 </div>
+
+
+<script>
+
+function buy(
+    name,
+    price,
+    traffic,
+    duration,
+    pay
+){
+
+    const url =
+        "buy.html?" +
+        "name=" + encodeURIComponent(name) +
+        "&price=" + encodeURIComponent(price) +
+        "&traffic=" + encodeURIComponent(traffic) +
+        "&duration=" + encodeURIComponent(duration) +
+        "&pay=" + encodeURIComponent(pay);
+
+    window.location.href = url;
+
+}
+
+</script>
+
 </body>
 </html>
